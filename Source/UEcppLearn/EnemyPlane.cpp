@@ -31,10 +31,12 @@ AEnemyPlane::AEnemyPlane()
 	PawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensingComp"));
 	PawnSensingComp->SightRadius = 1500.f;          // 感知范围
 	PawnSensingComp->SetPeripheralVisionAngle(45.f);
+	// PawnSensingComp->SetSensingUpdatesEnabled(true);  // 确保感知更新启用
+	// PawnSensingComp->SensingInterval = 5.0f;      
 
 	//创建移动组件
 	MovementComp = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("MovementComp"));
-	MovementComp->MaxSpeed = 80.0f;
+	// MovementComp->MaxSpeed = 80.0f;
 	MovementComp->Acceleration = 1000.0f;
 	MovementComp->Deceleration = 1000.0f;
 
@@ -74,46 +76,46 @@ FVector AEnemyPlane::GetRandomPointInPartolBounds()
 	return RandomPoint;
 }
 
-void AEnemyPlane::MoveToNextPoint()
-{
-	CurrentPoint = GetRandomPointInPartolBounds();
-}
-
-bool AEnemyPlane::HasReachedTarget(const FVector& Target) const
-{
-	return FVector::Dist(GetActorLocation(),Target)< AcceptanceRadius;
-}
-
-void AEnemyPlane::SmoothRotateToTarget(float DeltaTime)
-{
-	//计算目标方向
-	FVector TargetDirection = (CurrentPoint - GetActorLocation()).GetSafeNormal();
-	// FVector TargetDirection = CurrentPoint - GetActorLocation();
-	
-	//如果已经面向目标，不需要旋转
-	if (GetActorForwardVector().Equals(TargetDirection, 0.1f))
-	{
-		bIsTurning = true;
-		return;
-	}
-
-	bIsTurning = true;
-
-	//计算目标旋转
-	FRotator TargetRotation = TargetDirection.Rotation();
-
-	//平滑插值当前旋转到目标旋转
-	FRotator NewRotation = FMath::RInterpTo(
-		GetActorRotation(),
-		TargetRotation,
-		DeltaTime,
-		RotationSpeed
-		);
-	//应用旋转
-	// NewRotation.Pitch = 0;
-	// NewRotation.Yaw = 0;
-	SetActorRotation(NewRotation);
-}
+// void AEnemyPlane::MoveToNextPoint()
+// {
+// 	CurrentPoint = GetRandomPointInPartolBounds();
+// }
+//
+// bool AEnemyPlane::HasReachedTarget(const FVector& Target) const
+// {
+// 	return FVector::Dist(GetActorLocation(),Target)< AcceptanceRadius;
+// }
+//
+// void AEnemyPlane::SmoothRotateToTarget(float DeltaTime)
+// {
+// 	//计算目标方向
+// 	FVector TargetDirection = (CurrentPoint - GetActorLocation()).GetSafeNormal();
+// 	// FVector TargetDirection = CurrentPoint - GetActorLocation();
+// 	
+// 	//如果已经面向目标，不需要旋转
+// 	if (GetActorForwardVector().Equals(TargetDirection, 0.1f))
+// 	{
+// 		bIsTurning = true;
+// 		return;
+// 	}
+//
+// 	bIsTurning = true;
+//
+// 	//计算目标旋转
+// 	FRotator TargetRotation = TargetDirection.Rotation();
+//
+// 	//平滑插值当前旋转到目标旋转
+// 	FRotator NewRotation = FMath::RInterpTo(
+// 		GetActorRotation(),
+// 		TargetRotation,
+// 		DeltaTime,
+// 		RotationSpeed
+// 		);
+// 	//应用旋转
+// 	// NewRotation.Pitch = 0;
+// 	// NewRotation.Yaw = 0;
+// 	SetActorRotation(NewRotation);
+// }
 
 void AEnemyPlane::OnSeePawn(APawn* EnemyPawn)
 {
@@ -122,33 +124,32 @@ void AEnemyPlane::OnSeePawn(APawn* EnemyPawn)
 	TargetPawn = EnemyPawn;
 
 	AEnemyAIController* AICon = Cast<AEnemyAIController>(GetController());
-
-	// OwnerComp.GetBlackboardComponent()->SetValueAsObject(TEXT("TargetActor"), TargetPawn);
-	// AICon->GetBlackboardComponent()->SetValueAsObject("TargetActor", EnemyPawn);
-
-	// if (AICon && AICon->GetBlackboardComponent())
-	// {
-	// 	UBlackboardComponent* BlackboardComp = AICon->GetBlackboardComponent();
-	//
-	// 	if (BlackboardComp->GetKeyID(TEXT("TargetActor"))!=FBlackboard::InvalidKey)
-	// 	{
-	// 		BlackboardComp->SetValueAsObject(TEXT("TargetActor"), TargetPawn);
-	// 		BlackboardComp->SetValueAsFloat("DesiredDistance", DesiredDistance);
-	// 		UE_LOG(LogTemp, Warning, TEXT("Successfully set TargetActor in blackboard"));
-	// 	}
-	// 	else
-	// 	{
-	// 		UE_LOG(LogTemp, Error, TEXT("TargetActor key does not exist in blackboard!"));
-	// 	}
-	// }
 	
 	if (AICon)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("感知到玩家，进入追击状态"));
 		// 更新黑板，通知行为树进入追击状态
 		AICon->GetBlackboardComponent()->SetValueAsObject("TargetActor", EnemyPawn);
 		AICon->GetBlackboardComponent()->SetValueAsFloat("DesiredDistance", DesiredDistance);
 	}
 }
+
+// void AEnemyPlane::OnLostSightOfPawn(APawn* Pawn)
+// {
+// 	if (!Pawn->IsPlayerControlled()) return;
+//
+// 	if (Pawn == TargetPawn)
+// 	{
+// 		TargetPawn = nullptr;
+//
+// 		AEnemyAIController* AICon = Cast<AEnemyAIController>(GetController());
+// 		if (AICon && AICon->GetBlackboardComponent())
+// 		{
+// 			AICon->GetBlackboardComponent()->ClearValue("TargetActor");
+// 			UE_LOG(LogTemp, Warning, TEXT("失去玩家视线，回到巡逻状态"));
+// 		}
+// 	}
+// }
 
 // Called when the game starts or when spawned
 void AEnemyPlane::BeginPlay()
@@ -156,11 +157,12 @@ void AEnemyPlane::BeginPlay()
 	Super::BeginPlay();
 
 	//设置初始目标点
-	CurrentPoint = GetRandomPointInPartolBounds();
+	// CurrentPoint = GetRandomPointInPartolBounds();
 
 	if (PawnSensingComp)
 	{
 		PawnSensingComp->OnSeePawn.AddDynamic(this, &AEnemyPlane::OnSeePawn);
+		// PawnSensingComp->OnSeePawn.AddDynamic(this,&AEnemyPlane::OnLostSightOfPawn);
 	}
 }
 
@@ -168,31 +170,29 @@ void AEnemyPlane::BeginPlay()
 void AEnemyPlane::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	//如果在追击玩家，不执行巡逻
-	if (TargetPawn)
-	{
-		return;
-	}
-
+	
 	//检查是否到达目标点
-	if (HasReachedTarget(CurrentPoint))
-	{
-		MoveToNextPoint();
-	}
-	else
-	{
-		//平滑转向目标
-		SmoothRotateToTarget(DeltaTime);
-		//向前移动
-		FVector Direction = GetActorForwardVector();
-		AddMovementInput(Direction, 1.0f);
-	}
+	// if (HasReachedTarget(CurrentPoint))
+	// {
+	// 	MoveToNextPoint();
+	// }
+	// else
+	// {
+	// 	//平滑转向目标
+	// 	SmoothRotateToTarget(DeltaTime);
+	// 	//向前移动
+	// 	FVector Direction = GetActorForwardVector();
+	// 	AddMovementInput(Direction, 1.0f);
+	// }
 }
 
 // Called to bind functionality to input
 void AEnemyPlane::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+}
 
+void AEnemyPlane::ReturnToPatrol()
+{
+	
 }

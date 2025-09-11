@@ -50,3 +50,14 @@ EBTNodeResult::Type UBTTaskNodeAIAction::ExecuteTask(UBehaviorTreeComponent& Own
 
 	return EBTNodeResult::Succeeded;
 }
+
+// void UBTTaskNodeAIAction::InitializeFromAsset(UBehaviorTree& Asset)
+// {
+// 	Super::InitializeFromAsset(Asset);
+//
+// 	UBlackboardData* BBAsset = GetBlackboardAsset();
+// 	if (BBAsset)
+// 	{
+// 		BlackboardKey.ResolveSelectedKey(*BBAsset);
+// 	}
+// }

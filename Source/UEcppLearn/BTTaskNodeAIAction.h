@@ -16,13 +16,18 @@ class UECPPLEARN_API UBTTaskNodeAIAction : public UBTTaskNode
 
 public:
 	UBTTaskNodeAIAction();
+
+	// UPROPERTY(EditAnywhere, Category=Blackboard)
+	// struct FBlackboardKeySelector BlackboardKey;
+	
 	//执行任务
-	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override; 
+	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
+	// virtual void InitializeFromAsset(UBehaviorTree& Asset) override;
 	
 
 protected:
 	UPROPERTY(EditAnywhere)
-	float SearchRedius = 2000.0f;
+	float SearchRadius = 2000.0f;
 	
 private:
 	

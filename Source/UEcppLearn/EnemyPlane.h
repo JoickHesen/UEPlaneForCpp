@@ -45,33 +45,31 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="AI")
 	FVector CurrentPoint;
 
-	//是否正在转向
-	bool bIsTurning;
-
-	//转向速度
-	float RotationSpeed = 5.0f;
-
-	//到达点容差范围
-	float AcceptanceRadius = 5.0f;
+	//失去视线后等待时间
+	UPROPERTY(EditAnywhere, Category="AI")
+	float LoseSightCooldown = 3.0f;
 
 	//生成巡逻随机点
 	UFUNCTION(BlueprintCallable, Category="AI")
 	FVector GetRandomPointInPartolBounds();
 
-	//移动到下一个点
-	UFUNCTION(BlueprintCallable, Category="AI")
-	void MoveToNextPoint();
-
-	//检查是否到达目标点
-	UFUNCTION(BlueprintCallable, Category="AI")
-	bool HasReachedTarget(const FVector& Target) const;
-
-	//平滑转向目标
-	UFUNCTION(BlueprintCallable, Category="AI")
-	void SmoothRotateToTarget(float DeltaTime);
+	// //移动到下一个点
+	// UFUNCTION(BlueprintCallable, Category="AI")
+	// void MoveToNextPoint();
+	//
+	// //检查是否到达目标点
+	// UFUNCTION(BlueprintCallable, Category="AI")
+	// bool HasReachedTarget(const FVector& Target) const;
+	//
+	// //平滑转向目标
+	// UFUNCTION(BlueprintCallable, Category="AI")
+	// void SmoothRotateToTarget(float DeltaTime);
 
 	UFUNCTION()
 	void OnSeePawn(APawn* Pawn);
+
+	// UFUNCTION()
+	// void OnLostSightOfPawn(APawn* Pawn); 
 
 protected:
 	// Called when the game starts or when spawned
@@ -84,4 +82,10 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	//失去视线计时器
+	FTimerHandle LoseSightTimerHandle;
+
+	//回到巡逻状态
+	UFUNCTION()
+	void ReturnToPatrol();
 };
