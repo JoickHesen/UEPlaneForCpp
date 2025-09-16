@@ -42,7 +42,7 @@ public:
 	void SetAIState(EAIState NewState);
 
 	//获取黑板组件
-	UBlackboardComponent* GetBlackboardComponent() const {return BlackboardComponent;}
+	UBlackboardComponent* GetBlackboardComponent() const {return MyBlackboardComponent;}
 
 	//感知目标
 	UFUNCTION()
@@ -104,7 +104,7 @@ protected:
 
 	//黑板组件
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI")
-	UBlackboardComponent* BlackboardComponent;
+	UBlackboardComponent* MyBlackboardComponent;
 
 	//当前AI状态
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "AI")

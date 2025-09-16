@@ -7,7 +7,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9ac28f83-66b9-4b12-9130-70720d57b215" name="Changes" comment="" />
+    <list default="true" id="543c4940-88d7-48f0-9e74-e6a74395cf9a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.UEcppLearn/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.UEcppLearn/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/AITree/BT_EnemyPlane.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/AITree/BT_EnemyPlane.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/BluePrints/BP_EnemyPlane.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/BluePrints/BP_EnemyPlane.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/UEcppLearn/Private/BehaviorTree/AI/AIControllerBase.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UEcppLearn/Private/BehaviorTree/AI/AIControllerBase.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/UEcppLearn/Private/BehaviorTree/BTTaskNodeAIAction.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UEcppLearn/Private/BehaviorTree/BTTaskNodeAIAction.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/UEcppLearn/Private/BehaviorTree/EnemyAIController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UEcppLearn/Private/BehaviorTree/EnemyAIController.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/UEcppLearn/Private/Pawn/EnemyPlane.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UEcppLearn/Private/Pawn/EnemyPlane.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/UEcppLearn/Public/BehaviorTree/AI/AIControllerBase.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UEcppLearn/Public/BehaviorTree/AI/AIControllerBase.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/UEcppLearn/Public/BehaviorTree/EnemyAIController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UEcppLearn/Public/BehaviorTree/EnemyAIController.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/UEcppLearn/Public/Pawn/EnemyPlane.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/UEcppLearn/Public/Pawn/EnemyPlane.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UEcppLearn.uproject" beforeDir="false" afterPath="$PROJECT_DIR$/UEcppLearn.uproject" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,8 +32,12 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="cidr-memory-view://5" root0="FORCE_HIGHLIGHTING" />
+    <setting file="cidr-memory-view://12" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/EpicGames/UE_5.1/Engine/Source/Runtime/AIModule/Classes/Perception/PawnSensingComponent.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/EpicGames/UE_5.1/Engine/Source/Runtime/CoreUObject/Public/UObject/Object.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/EpicGames/UE_5.1/Engine/Source/Runtime/Engine/Classes/GameFramework/Actor.h" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://C:/Program Files/EpicGames/UE_5.1/Engine/Source/Runtime/Engine/Classes/GameFramework/FloatingPawnMovement.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/EpicGames/UE_5.1/Engine/Source/Runtime/Engine/Classes/GameFramework/Pawn.h" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -35,21 +51,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "C/C++ Project.UEcppLearn.executor": "Debug",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;C/C++ Project.UEcppLearn.executor&quot;: &quot;Debug&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="UEcppLearn" type="CppProject" factoryName="C++ Project">
       <configuration_1 setup="1">
@@ -74,13 +91,15 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="9ac28f83-66b9-4b12-9130-70720d57b215" name="Changes" comment="" />
+      <changelist id="543c4940-88d7-48f0-9e74-e6a74395cf9a" name="Changes" comment="" />
       <created>1757642883512</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1757642883512</updated>
       <workItem from="1757642884501" duration="5043000" />
       <workItem from="1757647995628" duration="15620000" />
+      <workItem from="1758005690294" duration="6101000" />
+      <workItem from="1758011826321" duration="3122000" />
     </task>
     <servers />
   </component>
@@ -107,6 +126,11 @@
           <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
           <option name="timeStamp" value="3" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/Source/UEcppLearn/Private/BehaviorTree/AI/AIControllerBase.cpp</url>
+          <line>38</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

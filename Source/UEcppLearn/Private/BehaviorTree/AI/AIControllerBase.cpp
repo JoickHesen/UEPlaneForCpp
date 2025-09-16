@@ -18,8 +18,11 @@ AAIControllerBase::AAIControllerBase()
 	//创建感知组件
 	MyPerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("MyPerceptionComponent"));
 	//创建黑板组件
-	BlackboardComponent = CreateDefaultSubobject<UBlackboardComponent>(TEXT("BlackboardComponent"));
+	MyBlackboardComponent = CreateDefaultSubobject<UBlackboardComponent>(TEXT("MyBlackboardComponent"));
 
+	//感知组件配置
+	SightConfig = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("SightConfig"));
+	
 	CurrentState = EAIState::Patrol;
 	PreviousState = EAIState::Patrol;
 	PerceivedTarget = nullptr;
@@ -33,9 +36,9 @@ void AAIControllerBase::OnPossess(APawn* InPawn)
 
 	SetupPerceptionSystem(2000.f,2500.f,60.f);
 
-	if (BehaviorTree && BlackboardComponent)
+	if (BehaviorTree && MyBlackboardComponent)
 	{
-		UseBlackboard(BehaviorTree->BlackboardAsset,BlackboardComponent);
+		UseBlackboard(BehaviorTree->BlackboardAsset,MyBlackboardComponent);
 		RunBehaviorTree(BehaviorTree);
 	}
 }
@@ -48,9 +51,9 @@ void AAIControllerBase::SetAIState(EAIState NewState)
 		CurrentState = NewState;
 		HandleStateTransition(NewState);
 
-		if (BlackboardComponent)
+		if (MyBlackboardComponent)
 		{
-			BlackboardComponent->SetValueAsEnum("AIState",(uint8)NewState);
+			MyBlackboardComponent->SetValueAsEnum("AIState",(uint8)NewState);
 		}
 	}
 }
@@ -91,10 +94,10 @@ void AAIControllerBase::OnTargetPerceived(AActor* Actor, FAIStimulus Stimulus)
 		PerceivedTarget = Actor;
 		bHasTargetInSight = true;
 
-		if (BlackboardComponent)
+		if (MyBlackboardComponent)
 		{
-			BlackboardComponent->SetValueAsObject("TargetActor",Actor);
-			BlackboardComponent->SetValueAsBool("bHasLineOfSight",true);
+			MyBlackboardComponent->SetValueAsObject("TargetActor",Actor);
+			MyBlackboardComponent->SetValueAsBool("bHasLineOfSight",true);
 		}
 
 		SetAIState(EAIState::Chase);
@@ -111,9 +114,9 @@ void AAIControllerBase::OnTargetLost(AActor* Actor)
 	{
 		bHasTargetInSight = false;
 		StartLoseSightTimer();
-		if (BlackboardComponent)
+		if (MyBlackboardComponent)
 		{
-			BlackboardComponent->SetValueAsBool("bHasLineOfSight",false);
+			MyBlackboardComponent->SetValueAsBool("bHasLineOfSight",false);
 		}
 	}
 }
@@ -125,19 +128,18 @@ void AAIControllerBase::BeginPlay()
 	
 }
 
-void AAIControllerBase::SetupPerceptionSystem(float SightRadius,
-											float LoseSightRadius,
-											float PeripheralVisionAngleDegrees)
+void AAIControllerBase::SetupPerceptionSystem(float sightRadius,
+											float loseSightRadius,
+											float peripheralVisionAngleDegrees)
 {
 	if (!MyPerceptionComponent) return;
 
-	//感知组件配置
-	SightConfig = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("SightConfig"));
+	
 	if (SightConfig)
 	{
-		SightConfig->SightRadius = SightRadius;
-		SightConfig->LoseSightRadius = LoseSightRadius;
-		SightConfig->PeripheralVisionAngleDegrees = PeripheralVisionAngleDegrees;
+		SightConfig->SightRadius = sightRadius;
+		SightConfig->LoseSightRadius = loseSightRadius;
+		SightConfig->PeripheralVisionAngleDegrees = peripheralVisionAngleDegrees;
 		SightConfig->DetectionByAffiliation.bDetectEnemies = true;
 		SightConfig->DetectionByAffiliation.bDetectNeutrals = true;
 		SightConfig->DetectionByAffiliation.bDetectFriendlies = true;
@@ -160,10 +162,10 @@ void AAIControllerBase::HandleStateTransition(EAIState NewState)
 		StopLoseSightTimer();
 		break;
 	case EAIState::Patrol:
-		if (BlackboardComponent)
+		if (MyBlackboardComponent)
 		{
-			BlackboardComponent->ClearValue("TargetActor");
-			BlackboardComponent->ClearValue("bHasLineOfSight");
+			MyBlackboardComponent->ClearValue("TargetActor");
+			MyBlackboardComponent->ClearValue("bHasLineOfSight");
 		}
 		PerceivedTarget = nullptr;
 		bHasTargetInSight = false;

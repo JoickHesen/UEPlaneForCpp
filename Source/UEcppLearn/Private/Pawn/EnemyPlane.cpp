@@ -28,9 +28,9 @@ AEnemyPlane::AEnemyPlane()
 	EnemyPlaneMesh->SetRelativeRotation(FRotator(0.0f,-90.0f,0.0f));
 	// EnemyPlaneMesh->SetupAttachment(OutCollision);
 	
-	PawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensingComp"));
-	PawnSensingComp->SightRadius = 1500.f;          // 感知范围
-	PawnSensingComp->SetPeripheralVisionAngle(45.f);
+	// PawnSensingComp = CreateDefaultSubobject<UPawnSensingComponent>(TEXT("PawnSensingComp"));
+	// PawnSensingComp->SightRadius = 1500.f;          // 感知范围
+	// PawnSensingComp->SetPeripheralVisionAngle(45.f);
 	// PawnSensingComp->SetSensingUpdatesEnabled(true);  // 确保感知更新启用
 	// PawnSensingComp->SensingInterval = 5.0f;      
 
@@ -50,36 +50,36 @@ AEnemyPlane::AEnemyPlane()
 	PatrolBounds->SetCollisionEnabled(ECollisionEnabled::NoCollision);//不需要碰撞
 }
 
-FVector AEnemyPlane::GetRandomPointInPartolBounds()
-{
-	if (!PatrolBounds)
-		return GetActorLocation();
+// FVector AEnemyPlane::GetRandomPointInPartolBounds()
+// {
+// 	if (!PatrolBounds)
+// 		return GetActorLocation();
+//
+// 	FVector Origin = PatrolBounds->Bounds.Origin;
+// 	FVector Extent = PatrolBounds->Bounds.BoxExtent;
+//
+// 	//生成随机点
+// 	FVector RandomPoint = FMath::RandPointInBox(FBox(Origin - Extent, Origin + Extent));
+// 	
+// 	return RandomPoint;
+// }
 
-	FVector Origin = PatrolBounds->Bounds.Origin;
-	FVector Extent = PatrolBounds->Bounds.BoxExtent;
-
-	//生成随机点
-	FVector RandomPoint = FMath::RandPointInBox(FBox(Origin - Extent, Origin + Extent));
-	
-	return RandomPoint;
-}
-
-void AEnemyPlane::OnSeePawn(APawn* EnemyPawn)
-{
-	if (!EnemyPawn->IsPlayerControlled()) return;
-
-	TargetPawn = EnemyPawn;
-
-	AEnemyAIController* AICon = Cast<AEnemyAIController>(GetController());
-	
-	if (AICon)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("感知到玩家，进入追击状态"));
-		// 更新黑板，通知行为树进入追击状态
-		AICon->GetBlackboardComponent()->SetValueAsObject("TargetActor", EnemyPawn);
-		AICon->GetBlackboardComponent()->SetValueAsFloat("DesiredDistance", DesiredDistance);
-	}
-}
+// void AEnemyPlane::OnSeePawn(APawn* EnemyPawn)
+// {
+// 	if (!EnemyPawn->IsPlayerControlled()) return;
+//
+// 	TargetPawn = EnemyPawn;
+//
+// 	AEnemyAIController* AICon = Cast<AEnemyAIController>(GetController());
+// 	
+// 	if (AICon)
+// 	{
+// 		UE_LOG(LogTemp, Warning, TEXT("感知到玩家，进入追击状态"));
+// 		// 更新黑板，通知行为树进入追击状态
+// 		AICon->GetBlackboardComponent()->SetValueAsObject("TargetActor", EnemyPawn);
+// 		AICon->GetBlackboardComponent()->SetValueAsFloat("DesiredDistance", DesiredDistance);
+// 	}
+// }
 
 // Called when the game starts or when spawned
 void AEnemyPlane::BeginPlay()
@@ -89,10 +89,10 @@ void AEnemyPlane::BeginPlay()
 	//设置初始目标点
 	// CurrentPoint = GetRandomPointInPartolBounds();
 
-	if (PawnSensingComp)
-	{
-		PawnSensingComp->OnSeePawn.AddDynamic(this, &AEnemyPlane::OnSeePawn);
-	}
+	// if (PawnSensingComp)
+	// {
+	// 	PawnSensingComp->OnSeePawn.AddDynamic(this, &AEnemyPlane::OnSeePawn);
+	// }
 }
 
 // Called every frame

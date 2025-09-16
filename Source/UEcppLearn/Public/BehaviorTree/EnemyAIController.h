@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "AIController.h"
 #include "AI/AIControllerBase.h"
+#include "Components/BoxComponent.h"
 #include "EnemyAIController.generated.h"
 
 /**
@@ -21,6 +22,10 @@ public:
 	virtual void OnPossess(APawn* InPawn) override;
 
 	// UBlackboardComponent* GetBlackboardComp() const {return BlackboardComponent;}
+
+	//生成巡逻点
+	UFUNCTION(BlueprintCallable, Category = "AI")
+	FVector GetRandomPatrolPoint() const;
 	
 protected:
 	// //行为树
@@ -37,9 +42,7 @@ protected:
 	//重写感知处理
 	virtual void OnTargetPerceived(AActor* Actor, FAIStimulus Stimulus) override;
 	virtual void OnTargetLost(AActor* Actor) override;
-	//生成巡逻点
-	UFUNCTION(BlueprintCallable, Category = "AI")
-	FVector GetRandomPatrolPoint() const;
+
 	
 private:
 	//获取敌人Pawn

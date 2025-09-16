@@ -22,8 +22,8 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	class UBoxComponent* EnemyPlaneOutCollision;
 
-	UPROPERTY(VisibleAnywhere, Category="AI")
-	UPawnSensingComponent* PawnSensingComp;
+	// UPROPERTY(VisibleAnywhere, Category="AI")
+	// UPawnSensingComponent* PawnSensingComp;
 
 	//移动组件
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Movement")
@@ -50,14 +50,11 @@ public:
 	float LoseSightCooldown = 3.0f;
 
 	//生成巡逻随机点
-	UFUNCTION(BlueprintCallable, Category="AI")
-	FVector GetRandomPointInPartolBounds();
-
-	UFUNCTION()
-	void OnSeePawn(APawn* Pawn);
+	// UFUNCTION(BlueprintCallable, Category="AI")
+	// FVector GetRandomPointInPartolBounds();
 
 	// UFUNCTION()
-	// void OnLoseSight(APawn* Pawn);
+	// void OnSeePawn(APawn* Pawn);
 
 protected:
 	// Called when the game starts or when spawned

@@ -7,6 +7,7 @@
 #include "Pawn/EnemyPlane.h"
 #include "NavigationSystem.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "BehaviorTree/EnemyAIController.h"
 
 UBTTaskNodeAIAction::UBTTaskNodeAIAction()
 {
@@ -24,7 +25,10 @@ EBTNodeResult::Type UBTTaskNodeAIAction::ExecuteTask(UBehaviorTreeComponent& Own
 		return  EBTNodeResult::Failed;
 
 	//使用飞机自身的巡逻点生产随机点
-	FVector RandomPoint = EnemyPlane->GetRandomPointInPartolBounds();
+	AEnemyAIController* EnemyAICon = Cast<AEnemyAIController>(AICon);
+	if (!EnemyAICon)
+		return EBTNodeResult::Failed;
+	FVector RandomPoint = EnemyAICon->GetRandomPatrolPoint();
 
 	//写入黑板
 	OwnerComp.GetBlackboardComponent()->SetValueAsVector(TEXT("PatrolLocation"), RandomPoint);

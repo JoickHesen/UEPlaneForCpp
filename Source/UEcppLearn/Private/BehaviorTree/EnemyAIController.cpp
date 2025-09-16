@@ -20,10 +20,10 @@ void AEnemyAIController::OnPossess(APawn* InPawn)
 	//设置巡逻点
 	UpdatePatrolPoint();
 
-	if (BlackboardComponent)
+	if (MyBlackboardComponent)
 	{
-		BlackboardComponent->SetValueAsVector("PatrolLocation",CurrentPatrolPoint);
-		BlackboardComponent->SetValueAsFloat("DesireDistance",GetEnemyPlane()?GetEnemyPlane()->DesiredDistance:300.0f);
+		MyBlackboardComponent->SetValueAsVector("PatrolLocation",CurrentPatrolPoint);
+		MyBlackboardComponent->SetValueAsFloat("DesiredDistance",GetEnemyPlane()?GetEnemyPlane()->DesiredDistance:300.0f);
 	}
 }
 
@@ -66,20 +66,30 @@ void AEnemyAIController::OnTargetLost(AActor* Actor)
 FVector AEnemyAIController::GetRandomPatrolPoint() const
 {
 	AEnemyPlane* EnemyPlane = GetEnemyPlane();
-	if (EnemyPlane && EnemyPlane->PatrolBounds)
-	{
-		return EnemyPlane->GetRandomPointInPartolBounds();
-	}
-	
+	if (!EnemyPlane->PatrolBounds)
+		return  EnemyPlane->GetActorLocation();
+	FVector Origin = EnemyPlane->PatrolBounds->Bounds.Origin;
+	FVector Extent = EnemyPlane->PatrolBounds->Bounds.BoxExtent;
+
+	FVector RandomPoint = FMath::RandPointInBox(FBox(Origin - Extent, Origin + Extent));
+
+	return RandomPoint;
 }
 
 void AEnemyAIController::UpdatePatrolPoint()
 {
-	
+	CurrentPatrolPoint = GetRandomPatrolPoint();
+
+	if (MyBlackboardComponent)
+	{
+		MyBlackboardComponent->SetValueAsVector("PatrolLocation",CurrentPatrolPoint);
+	}
+
+	GetWorld()->GetTimerManager().ClearTimer(PatrolTimerHandle);
 }
 
 class AEnemyPlane* AEnemyAIController::GetEnemyPlane() const
 {
-	
+	return Cast<AEnemyPlane>(GetPawn());
 }
 
